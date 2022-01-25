@@ -270,7 +270,7 @@ class ApplicationController < ActionController::Base
       # cause category / topic was deleted
       if permalink.present? && permalink.target_url
         # permalink present, redirect to that URL
-        redirect_with_client_support permalink.target_url, status: :moved_permanently
+        redirect_with_client_support permalink.target_url, status: :moved_permanently, allow_other_host: true
         return
       end
     end
@@ -812,7 +812,7 @@ class ApplicationController < ActionController::Base
       end
 
       if UserApiKey.allowed_scopes.superset?(Set.new(["one_time_password"]))
-        redirect_to("#{params[:auth_redirect]}?otp=true")
+        redirect_to("#{params[:auth_redirect]}?otp=true", allow_other_host: true)
         return
       end
     end
